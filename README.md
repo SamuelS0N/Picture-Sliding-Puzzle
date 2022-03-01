@@ -1,0 +1,1 @@
+![Picture_Sliding_Puzzle_Diagram_SB.drawio__1_](/uploads/6d1a657d0ce16d0a691e6efe5e13d326/Picture_Sliding_Puzzle_Diagram_SB.drawio__1_.png)
