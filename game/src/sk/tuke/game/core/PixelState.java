@@ -1,5 +1,5 @@
 package sk.tuke.game.core;
 
 public enum PixelState {
-    MOVABLE, UNMOVABLE
+    MOVABLEUPDOWN, MOVABLERIGHTLEFT, UNMOVABLE
 }
