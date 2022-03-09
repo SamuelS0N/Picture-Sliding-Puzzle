@@ -9,7 +9,6 @@ public abstract class Pixel {
     }
 
     void setState(PixelState state) {
-
         this.state = state;
     }
 
