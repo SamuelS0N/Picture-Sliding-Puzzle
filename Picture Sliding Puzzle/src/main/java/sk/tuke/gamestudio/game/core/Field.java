@@ -1,4 +1,4 @@
-package sk.tuke.game.core;
+package sk.tuke.gamestudio.game.core;
 
 
 import java.util.*;
@@ -7,16 +7,19 @@ import java.util.*;
 public class Field {
 
     private final Pixel[][] pixels;
-    private Nonempty nonemptyPixel;
 
     private final int rowCount;
     private final int columnCount;
     private int score;
 
+    private FieldState fieldState;
+
     public Field(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.score = 0;
+
+        this.fieldState = FieldState.PLAYING;
 
         pixels = new Pixel[rowCount][columnCount];
         generate();
@@ -26,7 +29,7 @@ public class Field {
         generateEmptyPixel();
         fillWithNonemptyPixels();
         updatePixelsStates();
-        controlPrintPixelStates();
+        //controlPrintPixelStates();
     }
 
     private void generateEmptyPixel() {
@@ -40,9 +43,9 @@ public class Field {
 
     private void fillWithNonemptyPixels() {
 
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
         for (int i = 1; i <= columnCount*rowCount-1; i++) {
-            list.add(new Integer(i));
+            list.add(i);
         }
         Collections.shuffle(list);
 
@@ -51,8 +54,7 @@ public class Field {
             for (int column = 0; column < getColumnCount(); column++) {
                 if(pixels[row][column] == null) {
 
-                    nonemptyPixel = new Nonempty(list.get(a));
-                    pixels[row][column] = nonemptyPixel;
+                    pixels[row][column] = new Nonempty(list.get(a));
                     a++;
 
                 }
@@ -88,7 +90,7 @@ public class Field {
             }
         }
 
-        int positionEmpty[] = getPositionEmpty();
+        int[] positionEmpty = getPositionEmpty();
         int rowEmpty = positionEmpty[0];
         int columnEmpty = positionEmpty[1];
 
@@ -105,51 +107,87 @@ public class Field {
 
     public void moveTile(int row, int column) {
 
+        if(getFieldState() == FieldState.SOLVED) return;
+
         Pixel pixel = getPixel(row, column);
         if(pixel.getState() == PixelState.UNMOVABLE || pixel instanceof Empty) return;
 
-        int positionEmpty[] = getPositionEmpty();
+        int[] positionEmpty = getPositionEmpty();
         int positionEmptyRow = positionEmpty[0];
         int positionEmptyColumn = positionEmpty[1];
 
+
         if(pixel.getState() == PixelState.MOVABLEUPDOWN) {
-            if (row - positionEmptyRow > 0) {
-                for (int a = positionEmptyRow; a < (Math.abs(row - positionEmptyRow)) + positionEmptyRow; a++) {
-                    Pixel currentPixel = pixels[a][column];
 
-                    pixels[a][column] = pixels[a + 1][column];
-                    pixels[a + 1][column] = currentPixel;
-                }
-            } else {
-                for (int a = positionEmptyRow; a > row; a--) {
-                    Pixel currentPixel = pixels[a][column];
+            movingTilesUpDown(row, column, positionEmptyRow);
 
-                    pixels[a][column] = pixels[a - 1][column];
-                    pixels[a - 1][column] = currentPixel;
-                }
-            }
         }
         else if (pixel.getState() == PixelState.MOVABLERIGHTLEFT) {
-            if (column - positionEmptyColumn > 0) {
-                for (int a = positionEmptyColumn; a < (Math.abs(column - positionEmptyColumn)) + positionEmptyColumn; a++) {
-                    Pixel currentPixel = pixels[row][a];
 
-                    pixels[row][a] = pixels[row][a+1];
-                    pixels[row][ a+1 ] = currentPixel;
-                }
-            } else {
-                for (int a = positionEmptyColumn; a > column; a--) {
-                    Pixel currentPixel = pixels[row][a];
+            movingTilesRightLeft(row, column, positionEmptyColumn);
 
-                    pixels[row][a] = pixels[row][a-1];
-                    pixels[row][a-1] = currentPixel;
+        }
+        updatePixelsStates();
+        increaseScore();
+        endIfSolved();
+
+
+    }
+
+    private void endIfSolved() {
+
+        int controlValue = 1;
+        for(int row = 0; row < getRowCount(); row++) {
+
+            for (int column = 0; column < getColumnCount(); column++) {
+
+                if(controlValue != rowCount*columnCount) {
+                        if(getPixel(row, column) instanceof Empty) return;
+                        Nonempty nonempty = (Nonempty) pixels[row][column];
+                        if (nonempty.getValue() != controlValue) {
+                            return;
+                        }
+                     controlValue++;
                 }
             }
         }
-        updatePixelsStates();
-        updateScore();
+        fieldState = FieldState.SOLVED;
+    }
 
+    private void movingTilesRightLeft(int row, int column, int positionEmptyColumn) {
+        if (column - positionEmptyColumn > 0) {
+            for (int a = positionEmptyColumn; a < (Math.abs(column - positionEmptyColumn)) + positionEmptyColumn; a++) {
+                Pixel currentPixel = pixels[row][a];
 
+                pixels[row][a] = pixels[row][a+1];
+                pixels[row][ a+1 ] = currentPixel;
+            }
+        } else {
+            for (int a = positionEmptyColumn; a > column; a--) {
+                Pixel currentPixel = pixels[row][a];
+
+                pixels[row][a] = pixels[row][a-1];
+                pixels[row][a-1] = currentPixel;
+            }
+        }
+    }
+
+    private void movingTilesUpDown(int row, int column, int positionEmptyRow) {
+        if (row - positionEmptyRow > 0) {
+            for (int a = positionEmptyRow; a < (Math.abs(row - positionEmptyRow)) + positionEmptyRow; a++) {
+                Pixel currentPixel = pixels[a][column];
+
+                pixels[a][column] = pixels[a + 1][column];
+                pixels[a + 1][column] = currentPixel;
+            }
+        } else {
+            for (int a = positionEmptyRow; a > row; a--) {
+                Pixel currentPixel = pixels[a][column];
+
+                pixels[a][column] = pixels[a - 1][column];
+                pixels[a - 1][column] = currentPixel;
+            }
+        }
     }
 
     private int[] getPositionEmpty() {
@@ -178,11 +216,15 @@ public class Field {
         return score;
     }
 
-    public void updateScore() {
+    public void increaseScore() {
         this.score++;
     }
 
     public Pixel getPixel(int row, int column) {
         return pixels[row][column];
+    }
+
+    public FieldState getFieldState() {
+        return this.fieldState;
     }
 }

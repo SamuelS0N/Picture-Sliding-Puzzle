@@ -1,9 +1,14 @@
-package sk.tuke.game.consoleui;
+package sk.tuke.gamestudio.game.consoleui;
 
-import sk.tuke.game.core.Empty;
-import sk.tuke.game.core.Field;
-import sk.tuke.game.core.Nonempty;
+import sk.tuke.gamestudio.game.core.Empty;
+import sk.tuke.gamestudio.game.core.Field;
+import sk.tuke.gamestudio.game.core.FieldState;
+import sk.tuke.gamestudio.game.core.Nonempty;
+import sk.tuke.gamestudio.game.entity.Score;
+import sk.tuke.gamestudio.game.service.ScoreService;
+import sk.tuke.gamestudio.game.service.ScoreServiceJDBC;
 
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -11,18 +16,24 @@ public class ConsoleUI {
     //nemam este vseobecne
     private static final Pattern INPUT_PATTERN = Pattern.compile("([M])([1-3])([A-C])");
 
-    private Field field;
-    private Scanner scanner = new Scanner(System.in);
+    private final Field field;
+    private final Scanner scanner = new Scanner(System.in);
+
+    private ScoreService scoreService = new ScoreServiceJDBC();
 
     public ConsoleUI(Field field) {
         this.field = field;
     }
 
     public void play() {
-        while (true) {
+        do {
+            printTopScores();
             printField();
             processInput();
-        }
+        } while (field.getFieldState() == FieldState.PLAYING);
+        printField();
+        System.out.println("Game Solved!");
+        scoreService.addScore(new Score(System.getProperty("user.name"), "Picture Sliding Puzzle", field.getScore(), new Date()));
     }
 
     private void printField() {
@@ -68,4 +79,15 @@ public class ConsoleUI {
             System.out.println("Wrong input");
         }
     }
+
+    private void printTopScores() {
+        var scores = scoreService.getTopScore("Picture Sliding Puzzle");
+        System.out.println("-----------------------------------------------");
+        for(int i = 0; i < scores.size(); i++) {
+            var score = scores.get(i);
+            System.out.printf("%d. %s %d \n",i+1,  score.getPlayer(), score.getPoints());
+        }
+        System.out.println("-----------------------------------------------");
+    }
+
 }

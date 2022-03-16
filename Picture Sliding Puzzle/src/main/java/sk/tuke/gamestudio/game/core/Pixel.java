@@ -1,4 +1,4 @@
-package sk.tuke.game.core;
+package sk.tuke.gamestudio.game.core;
 
 public abstract class Pixel {
 

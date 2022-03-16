@@ -1,4 +1,4 @@
-package sk.tuke.game.core;
+package sk.tuke.gamestudio.game.core;
 
 public class Nonempty extends Pixel{
 
@@ -12,7 +12,7 @@ public class Nonempty extends Pixel{
         return this.value;
     }
 
-    public void setValue(int value) {
+/*    public void setValue(int value) {
         this.value = value;
-    }
+    }*/
 }
