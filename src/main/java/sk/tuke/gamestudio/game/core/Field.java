@@ -30,7 +30,10 @@ public class Field {
         fillWithNonemptyPixels();
         updatePixelsStates();
         //controlPrintPixelStates();
+        endIfSolved();
     }
+
+
 
     private void generateEmptyPixel() {
         Random random = new Random();
@@ -49,14 +52,13 @@ public class Field {
         }
         Collections.shuffle(list);
 
+
         int a = 0;
         for (int row =0; row < getRowCount(); row++) {
             for (int column = 0; column < getColumnCount(); column++) {
                 if(pixels[row][column] == null) {
-
                     pixels[row][column] = new Nonempty(list.get(a));
                     a++;
-
                 }
             }
         }
@@ -115,7 +117,6 @@ public class Field {
         int[] positionEmpty = getPositionEmpty();
         int positionEmptyRow = positionEmpty[0];
         int positionEmptyColumn = positionEmpty[1];
-
 
         if(pixel.getState() == PixelState.MOVABLEUPDOWN) {
 
