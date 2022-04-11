@@ -1,0 +1,9 @@
+POST http://localhost:8080/api/score
+Content-Type: application/json
+
+{
+  "player": "http",
+  "game": "Picture Sliding Puzzle",
+  "points": 10,
+  "playedAt": "2022-04-11T15:09:28.713+00:00"
+}
