@@ -14,41 +14,16 @@ public class Field {
 
     private FieldState fieldState;
 
-    public Field() {
+    public Field(int row, int column) {
 
-        selectLevel();
+        this.rowCount = row;
+        this.columnCount = column ;
         this.score = 0;
 
         this.fieldState = FieldState.PLAYING;
 
         pixels = new Pixel[rowCount][columnCount];
         generate();
-    }
-
-    private void selectLevel() {
-        Scanner scan = new Scanner(System.in);
-        boolean continueInput = true;
-        int row = 0;
-
-        do {
-            try {
-                System.out.print("Enter level(1-3): ");
-                row = scan.nextInt();
-                while (row > 3 || row < 1 ) {
-                    System.out.print("Wrong input! Enter level(1-3): ");
-                    row = scan.nextInt();
-                }
-                continueInput = false;
-
-            } catch (InputMismatchException ex) {
-                System.out.println("Try again. (" +
-                        "Incorrect input: an integer is required)");
-                scan.nextLine();
-            }
-        } while (continueInput);
-
-        this.columnCount = row + 1;
-        this.rowCount = row + 1;
     }
 
     private void generate() {

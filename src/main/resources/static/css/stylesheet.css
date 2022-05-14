@@ -1,0 +1,186 @@
+/**
+ * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
+ *
+ * You may not modify, use, reproduce, or distribute this software except in
+ * compliance with  the terms of the License at:
+ * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
+ */
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+
+
+body {
+    background: #2851A6 url("http://i.stack.imgur.com/spmUM.gif") fixed bottom no-repeat;
+    background-size: cover;
+    text-align: center;
+    font-size: 12px;
+    ont-family: "Modern No. 20";
+    color: #000000;
+    max-width: 30rem;
+    margin: auto;
+    padding: 1em;
+}
+
+
+h1 {
+    ont-family: "Modern No. 20";
+    font-size:  40px;
+    font-weight: bold;
+    margin: 5px;
+    padding: 5px;
+    color: #ffc500;
+}
+
+#header {
+    color: antiquewhite;
+    font-size: 10px;
+    ont-family: "Modern No. 20";
+}
+
+#level1, #level2, #level3 {
+    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+    ont-family: "Modern No. 20";
+}
+
+p {
+    font-size: 20px;
+    color: #ffc500;
+    margin: 0px;
+    padding: 0px;
+    ont-family: "Modern No. 20";
+}
+
+#textScore {
+    font-size: 20px;
+    color: #ff0000;
+    margin: 0px;
+    padding: 0px;
+    ont-family: "Modern No. 20";
+}
+
+#htmField {
+    text-align: center;
+}
+
+#tb1 tr{
+    text-align: center;
+}
+
+h2 {
+    ont-family: "Modern No. 20";
+    font-size:  25px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #ffc500;
+}
+
+a:link, a:visited {
+    color: #00ff0e;
+    font-weight : bold;
+    text-decoration: none;
+    ont-family: "Modern No. 20";
+}
+
+a:link:hover, a:visited:hover  {
+    color: #00ff0e;
+    font-weight : bold;
+    text-decoration : underline;
+    ont-family: "Modern No. 20";
+}
+
+text {
+    color: #ffc500;
+}
+
+table th td  {
+    width: 100%;
+}
+
+td th{
+    text-align: center;
+    ont-family: "Modern No. 20";
+}
+
+#serverSideScoreTable {
+    background-color: dimgray;
+    color: #1111a9;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-family: "Modern No. 20";
+}
+
+#serverSideScoreTable tr:nth-child(even) {
+    background-color: lightblue;
+}
+
+#serverSideScoreTable tr:nth-child(odd) {
+    background-color: antiquewhite;
+}
+#commentTable {
+    background-color: dimgray;
+    color: #1111a9;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    font-family: "Modern No. 20";
+}
+
+#commentTable tr:nth-child(even) {
+    background-color: lightblue;
+}
+
+#commentTable tr:nth-child(odd) {
+    background-color: antiquewhite;
+}
+
+form {
+    font-family: "Modern No. 20";
+    font-size: 25px;
+    color: #ff0000;
+
+}
+
+h3 {
+    font-family: "Modern No. 20";
+    font-size: 20px;
+    color: #00ff0e;
+    margin: 0px;
+    padding: 0px;
+}
+
+#R1, #R2, #R3 {
+    font-family: "Modern No. 20";
+    font-size: 25px;
+    color: #ffc500;
+    margin: 0px;
+    padding: 0px;
+}
+
+#texRating {
+    font-family: "Modern No. 20";ont-family: "Modern No. 20";
+    color: white;
+    font-size: 25px;
+}
+
+#textGame {
+    font-family: "Modern No. 20";ont-family: "Modern No. 20";
+    font-size: 20px;
+}
+
+#koniec {
+    font-size: 17px;
+    text-align: center;
+    font-family: "Modern No. 20";
+    color: #ffffff;
+}
+
+

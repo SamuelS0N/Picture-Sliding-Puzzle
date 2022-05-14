@@ -32,7 +32,7 @@ public class main {
         } while (continueInput);*/
 
 
-        var field = new Field();
+        var field = new Field(2,2);
         var ui = new ConsoleUI(field);
 
         ui.play();
