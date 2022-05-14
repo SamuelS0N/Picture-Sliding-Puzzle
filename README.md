@@ -2,3 +2,5 @@
 
 Video JPA + REST : https://drive.google.com/file/d/1D2MtBJo-hSGidQgyYZ0CAARYSozTTiEH/view?usp=sharing
     Vo videu ukazujem cez postmana ako mi funguje JPA + REST.
+
+Video z finálnej odovzdávky : https://drive.google.com/file/d/1kbPjYncQ9OkJsSFxh5zu6nCu_bVrkQ7w/view?usp=sharing
