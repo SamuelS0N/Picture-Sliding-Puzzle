@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+
+    <!-- Render score with JavaScript  and jQuery https://jquery.com/ -->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/score/Picture Sliding Puzzle",
+            }).done(function (json) {
+                for (var i = 0; i < json.length; i++) {
+                    var score = json[i];
+                    $("#clientSideScoreTable1 tbody").append($("<tr><td>" + score.player + "<td>" + score.points + "<td>" + score.playedAt + "</tr>"));
+                }
+            });
+        });
+        //]]>
+    </script>-->
+
+</head>
+<body>
+
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
+<!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+<!--/*@thymesVar id="comments" type="java.util.List<sk.tuke.gamestudio.entity.Comment>"*/-->
+<!--/*@thymesVar id="rating" type="java.lang.Integer"*/-->
+<!--/*@thymesVar id="userController" type="sk.tuke.gamestudio.server.controller.UserController"*/-->
+<!--/*@thymesVar id="puzzleController" type="sk.tuke.gamestudio.server.controller.PuzzleController"*/-->
+
+
+<div th:replace="fragments::header"/>
+
+<h1>Picture Sliding Puzzle</h1>
+
+<span id="loginText" th:if="${@userController.logged}">
+    Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
+</span>
+
+<p id="textScore">Your score: <span th:text="${@puzzleController.getScore}"/><br>
+</p>
+
+<a id = "level1" href="/Picture Sliding Puzzle/new?level=2">Level 1</a>
+<a id = "level2"href="/Picture Sliding Puzzle/new?level=3">Level 2</a>
+<a id = "level3" href="/Picture Sliding Puzzle/new?level=4">Level 3</a>
+
+<p> Game state: <span id="stateGame"
+                  th:text="${@puzzleController.getState}"></span>
+</p>
+
+<span id="htmField" th:utext="${@puzzleController.getHtmlField} "></span>
+
+
+<h2>Scores</h2>
+<table id="serverSideScoreTable">
+    <thead>
+    <tr>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Played at</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="score: ${scores}">
+        <td th:text="${score.player}"></td>
+        <td th:text="${score.points}"></td>
+        <td th:text="${score.playedAt}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h2>Comments</h2>
+
+<!--<ol id="commentTable">
+    <li th:each="comment : ${comments}" >
+        <span th:text="${comment.player}"/>
+        <span th:text="${comment.text}"/>
+    </li>
+</ol>-->
+
+<table id="commentTable">
+    <thead>
+    <tr>
+        <th>Player</th>
+        <th>Text</th>
+        <th>Played at</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment: ${comments}">
+        <td th:text="${comment.player}"></td>
+        <td th:text="${comment.text}"></td>
+        <td th:text="${comment.playedAt}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<span th:if="${@userController.logged}">
+    <h2>ADD COMMENT</h2><br>
+
+            <form action="/addComment" method="post">
+            Text: <input type="text" name="text"/><br/>
+            <input type="submit"/>
+        </form>
+
+</span>
+
+<h2>Average Rating</h2>
+<span id="texRating" th:text="${rating}"/>
+
+<span th:if="${@userController.logged}">
+    <br>
+    <h3>ADD YOUR RATING</h3><br>
+    <a id ="R1" href="/Picture Sliding Puzzle/addRating?newRating=1">1     </a>
+    <a id="R2" href="/Picture Sliding Puzzle/addRating?newRating=2">2     </a>
+    <a id="R3" href="/Picture Sliding Puzzle/addRating?newRating=3">3</a>
+</span>
+
+<!--<h3>Scores generated on client with javascript</h3>
+<table id="clientSideScoreTable1">
+    <thead>
+    <tr>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Played at</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>-->
+
+<div th:replace="fragments::footer"></div>
+
+</body>
+</html>

@@ -14,7 +14,18 @@ public class RatingServiceJPA implements RatingService{
 
     @Override
     public void setRating(Rating rating) throws GameStudioException {
-        entityManager.persist(rating);
+        try {
+            int ratingGet = getRating(rating.getGame(), rating.getPlayer());
+            if (ratingGet == 0) {
+                entityManager.persist(rating);
+            } else {
+                int newRating = rating.getRating();
+                entityManager.createQuery("UPDATE Rating SET rating = :newRating where player = :player")
+                        .setParameter("newRating", newRating)
+                        .setParameter("player", rating.getPlayer()).executeUpdate();
+            }
+        } catch (GameStudioException exception) {
+        }
     }
 
     @Override
@@ -31,9 +42,13 @@ public class RatingServiceJPA implements RatingService{
 
     @Override
     public int getRating(String game, String player) throws GameStudioException {
-        return (int) entityManager.createNativeQuery("SELECT rating from Rating s where s.game = :game and s.player = :player")
-                .setParameter("game", game)
-                .setParameter("player", player).getSingleResult();
+        try {
+            return (int) entityManager.createNativeQuery("SELECT rating from Rating s where s.game = :game and s.player = :player")
+                    .setParameter("game", game)
+                    .setParameter("player", player).getSingleResult();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

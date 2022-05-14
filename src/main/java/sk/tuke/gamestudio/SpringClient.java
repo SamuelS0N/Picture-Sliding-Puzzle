@@ -30,7 +30,7 @@ public class SpringClient {
 
     @Bean
     public ConsoleUI consoleUI() {
-        return new ConsoleUI(new Field());
+        return new ConsoleUI(new Field(2,2));
     }
 
     @Bean

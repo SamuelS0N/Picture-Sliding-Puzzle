@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+
+</head>
+
+<div  th:fragment="header">
+    <h1>Welcome to <a class="href" href="/">Gamestudio!</a></h1>
+    <span  th:if="${@userController.logged}">
+        Logged as: <span th:text="${@userController.loggedUser.login}"/>
+        <a href="/logout">Logout</a><br/>
+    </span>
+
+    <span th:if="not ${@userController.logged}">
+        Not logged. Please
+        <a href="/">login or register</a>.<br/>
+    </span>
+</div>
+
+
+<div id="koniec" th:fragment="footer">
+
+    <hr/>
+    This is gamestudio! Developed by Samuel Bražina at TUKE.
+</div>
+
+</html>
